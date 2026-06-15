@@ -1,15 +1,49 @@
+import enums.ProductCategory;
+import enums.UserType;
+import models.Product;
+import models.User;
+import strategy.UpiPaymentStrategy;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
+public class AmazonDemo {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        System.out.println("\nWelcome to Amazon\n");
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        Amazon amazonSystem = Amazon.getAmazonInstance();
+
+        User user1 = amazonSystem.addUser(1,"Prakash","prakash@gmail.com",
+                "Prakash@123", UserType.Customer);
+
+        Product laptops = amazonSystem.addProduct(1,"Mac Book Air", "laptop for smoother experience",
+                ProductCategory.Electronics, 150.00, 125.00, 20);
+
+        Product mobiles = amazonSystem.addProduct(2,"Iphone 15", "iphone for smoother experience",
+                ProductCategory.Electronics, 100.00, 75.00, 25);
+
+        Product tShirts = amazonSystem.addProduct(3,"Polo T-shirts ", "T-shirts for comfort",
+                ProductCategory.Clothing, 50.00, 30.00, 30);
+
+        System.out.println("\nAll Products : " + amazonSystem.getProducts());
+
+        System.out.println("\nProducts list based on name: "+ amazonSystem.searchByName("Mac Book Air"));
+        System.out.println("Products list based on category "+ amazonSystem.searchByCategory(ProductCategory.Electronics));
+
+        amazonSystem.addItemToCart(user1, laptops, 10);
+        amazonSystem.addItemToCart(user1 , mobiles, 1);
+
+        amazonSystem.setPaymentStrategy(new UpiPaymentStrategy());
+        amazonSystem.placeOrder(user1, user1.getCart());
+
+        System.out.println("\nRemaining quantity of products : " + amazonSystem.getProducts());
+
+
+       System.out.println("User Order History : " + user1.getOrderHistory());
+
+
+
+
+
+
     }
 }
