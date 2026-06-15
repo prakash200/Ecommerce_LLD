@@ -7,10 +7,10 @@ A comprehensive low-level design of an Ecommerce system (customer-facing) built 
 
 ## Design Patterns Used
 
-### 1. Singleton Pattern - Inventory & Product Management
-- **Inventory** acts as a centralized, singleton-managed product catalog.
-- Ensures a single source of truth for product data (stock, pricing, etc.) across the entire application.
-- All product lookups, stock validations, and updates go through this single instance.
+### 1. Singleton Pattern - Amazon System
+- The **Amazon** class itself is a singleton, accessed via `Amazon.getAmazonInstance()`.
+- A single instance manages the entire system — users, products, cart, order, and payment services.
+- Ensures a centralized state (product catalog, user registry) across the application.
 
 ### 2. Strategy Pattern - Payment Types
 - **`PaymentStrategy`** interface defines a common `pay(Double amount)` contract.
